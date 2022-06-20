@@ -6,29 +6,29 @@ import (
 	"gorm.io/gorm"
 )
 
-type User struct {
-	ID    string `gorm:"primaryKey"`
-	Name  string
-	Email string
-	Age   int
+type Song struct {
+	Id     string `gorm:"primaryKey"`
+	Artist string
+	Album  string
+	Title  string
 }
 
-func NewUser(id, name, email string, age int) User {
-	return User{
-		ID:    id,
-		Name:  name,
-		Email: email,
-		Age:   age,
+func NewSong(id, artist, album, title string) Song {
+	return Song{
+		Id:     id,
+		Artist: artist,
+		Album:  album,
+		Title:  title,
 	}
 }
 
 func main() {
-	luxam := NewUser(uuid.New().String(), "luxam", "luxam@gmail.com", 18)
+	basketCase := NewSong(uuid.New().String(), "Green Day", "Dookie", "Basket Case")
 	dsn := "host=localhost user=postgres password=stauffenberg dbname=gorm port=5432 sslmode=disable TimeZone=Asia/Shanghai"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&User{})
-	db.Create(luxam)
+	db.AutoMigrate(&Song{})
+	db.Create(basketCase)
 }
